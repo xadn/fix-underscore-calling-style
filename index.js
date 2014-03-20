@@ -1,19 +1,31 @@
-// app/assets/javascripts/tracker/views.js
+var jstransform           = require('jstransform')
+  , Syntax                = require('esprima-fb').Syntax
+  , utils                 = require('jstransform/src/utils')
+  , fs                    = require('fs');
 
-/**
- * Reads a source file that may (or may not) contain ES6 classes, transforms it
- * to ES5 compatible code using the pre-bundled ES6 class visitors, and prints
- * out the result.
- */
-var es6ClassVisitors = require('jstransform/visitors/es6-class-visitors').visitorList;
-var fs = require('fs');
-var jstransform = require('jstransform');
+var originalFileContents = fs.readFileSync('examples/simple.js', 'utf-8');
+// var originalFileContents = fs.readFileSync('examples/views.js', 'utf-8');
 
-var originalFileContents = fs.readFileSync('examples/views.js', 'utf-8');
+function visitEvalCallExpressions(traverse, node, path, state) {
+  utils.append('UNDERSCORE', state);
+  utils.catchup(node.range[1], state);
+}
 
-var transformedFileData = jstransform.transform(
-  es6ClassVisitors,
+visitEvalCallExpressions.test = function(node, path, state) {
+  var val = node.type === Syntax.CallExpression
+         && node.callee.type === Syntax.Identifier
+         && node.callee.name === '_';
+
+  if (val) debugger
+
+  return val;
+};
+
+var transformedFileData = jstransform.transform([
+    visitEvalCallExpressions
+  ],
   originalFileContents
 );
 
+// alert("...eval?...really?...");eval('foo');
 console.log(transformedFileData.code);

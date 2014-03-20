@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jstransform": "^3.0.0"
+    "jstransform": "^3.0.0",
+    "esprima-fb": "^3001.1.0-dev-harmony-fb",
+    "node-inspector": "^0.7.1"
   }
 }
