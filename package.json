@@ -1,13 +1,13 @@
 {
-  "name": "transform-test",
-  "version": "0.0.0",
+  "name": "fix-underscore-calling-style",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/mocha/bin/mocha"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "jstransform": "^3.0.0",
     "esprima-fb": "^3001.1.0-dev-harmony-fb",
