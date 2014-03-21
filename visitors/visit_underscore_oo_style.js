@@ -27,8 +27,6 @@ function visitUnderscoreOOStyle(traverse, node, path, state) {
 
   var transformed = escodegen.generate(newStyleTree(prop, args)).replace(/;$/g, ' ');
 
-  debugger
-
   utils.append(transformed, state);
   utils.catchupWhiteSpace(path[1].range[1], state);
 }
@@ -42,8 +40,3 @@ visitUnderscoreOOStyle.test = function(node, path, state) {
 exports.visitorList = [
   visitUnderscoreOOStyle
 ];
-
-
-// function hasChanged(views) {
-//   return _.any(views, function() { return true; });
-// };

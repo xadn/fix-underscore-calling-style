@@ -13,9 +13,7 @@ describe('visitUnderscoreOOStyle', function() {
                       +   'return _.any(views, function() { return true; });'
                       + '}'
 
-      console.log(transform(original))
-
-      assert.equal(normalize(expected), normalize(transform(original)));
+      assert.equal(normalize(transform(original)), normalize(expected));
     });
   });
 
@@ -29,18 +27,29 @@ describe('visitUnderscoreOOStyle', function() {
                       +   'return _.any(function() { return [1, 2, 3]; }, function() { return true; });'
                       + '}'
 
-      console.log(transform(original))
-
-      assert.equal(normalize(expected), normalize(transform(original)));
+      assert.equal(normalize(transform(original)), normalize(expected));
     });
   });
+
+  describe('with nesting in the arguments', function() {
+    it('should transform the style', function() {
+      var original =    'function hasChanged(views) {'
+                      +   'return _(views).any(function(view) { return _(view).isObject(); });'
+                      + '}';
+
+      var expected =    'function hasChanged(views) {'
+                      +   'return _(views).any(function(view) { return _.isObject(view); });'
+                      + '}'
+
+      assert.equal(normalize(transform(original)), normalize(expected));
+    });
+  });
+
+  function transform(original) {
+    return jstransform.transform(visitUnderscoreOOStyle, original).code;
+  }
+
+  function normalize(text) {
+    return text.replace(/\s+/g, '');
+  }
 });
-
-function transform(original) {
-  return jstransform.transform(visitUnderscoreOOStyle, original).code;
-}
-
-function normalize(text) {
-  // return text.replace(/\s+/g, ' ');
-  return text.replace(/\s+/g, '');
-}
