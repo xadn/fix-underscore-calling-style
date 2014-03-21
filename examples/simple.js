@@ -1,8 +1,5 @@
-function hasChanged1(views, options) {
-  options = options || {};
-  return _(views).any(function(view) {
-    return view.views().hasChanged(options) || (view.hasChanged && view.hasChanged(options));
-  });
+function hasChanged(views) {
+  return _(views).any(function() { return true; });
 };
 
 function hasChanged2(views, options) {
