@@ -6,7 +6,7 @@ var jstransform            = require('jstransform')
 var name = process.argv[2];
 
 if (fs.lstatSync(name).isDirectory()) {
-  glob(name + "/**/*.js", {}, function (er, files) {
+  glob(name + "/**/*.js", {}, function (err, files) {
     files.forEach(transformFile);
   });
 } else {
@@ -14,8 +14,9 @@ if (fs.lstatSync(name).isDirectory()) {
 }
 
 function transformFile(fileName) {
-  fs.readFile(fileName, 'utf-8', function(err, data) {
+  fs.readFile(fileName, 'utf-8', function (err, data) {
     if (err) return;
-    fs.writeFile(fileName, jstransform.transform(visitUnderscoreOOStyle, data).code);
+    var transformed = jstransform.transform(visitUnderscoreOOStyle, data).code;
+    fs.writeFile(fileName, transformed);
   });
 }

@@ -1,6 +1,7 @@
 var Syntax                = require('esprima-fb').Syntax
   , escodegen             = require('escodegen')
-  , utils                 = require('jstransform/src/utils');
+  , utils                 = require('jstransform/src/utils')
+  , jstransform            = require('jstransform');
 
 function newStyleTree(prop, args) {
   return {
@@ -26,6 +27,7 @@ function visitUnderscoreOOStyle(traverse, node, path, state) {
       args = [].concat(node.callee.object.arguments, node.arguments);
 
   var transformed = escodegen.generate(newStyleTree(prop, args)).replace(/;$/g, ' ');
+  transformed = jstransform.transform(state.g.visitors, transformed).code
 
   utils.append(transformed, state);
   utils.catchupWhiteSpace(node.range[1], state);

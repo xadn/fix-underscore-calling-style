@@ -32,13 +32,13 @@ describe('visitUnderscoreOOStyle', function() {
   });
 
   describe('with nesting in the arguments', function() {
-    it('should transform the style of the outer function', function() {
+    it('should transform the style of all functions', function() {
       var original =    'function hasChanged(views) {'
                       +   'return _(views).any(function(view) { return _(view).isObject(); });'
                       + '}';
 
       var expected =    'function hasChanged(views) {'
-                      +   'return _.any(views, function(view) { return _(view).isObject(); });'
+                      +   'return _.any(views, function(view) { return _.isObject(view); });'
                       + '}'
 
       assert.equal(normalize(transform(original)), normalize(expected));
