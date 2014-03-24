@@ -35,14 +35,12 @@ function visitUnderscoreOOStyle(traverse, node, path, state) {
 }
 
 visitUnderscoreOOStyle.test = function(node, path, state) {
-  try {
-    var underscoreNode = node.callee.object;
-    return underscoreNode.type === Syntax.CallExpression
-           && underscoreNode.callee.type === Syntax.Identifier
-           && underscoreNode.callee.name === '_';
-  } catch(error) {
-    return false;
-  }
+  return  node.callee
+          && node.callee.object
+          && node.callee.object.type === Syntax.CallExpression
+          && node.callee.object.callee
+          && node.callee.object.callee.type === Syntax.Identifier
+          && node.callee.object.callee.name === '_';
 };
 
 exports.visitorList = [
