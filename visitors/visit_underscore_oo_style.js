@@ -5,19 +5,19 @@ var Syntax                = require('esprima-fb').Syntax
 
 function newStyleTree(prop, args) {
   return {
-    "type": "ExpressionStatement",
-    "expression": {
-      "type": "CallExpression",
-      "callee": {
-        "type": "MemberExpression",
-        "computed": false,
-        "object": {
-          "type": "Identifier",
-          "name": "_"
+    'type': 'ExpressionStatement',
+    'expression': {
+      'type': 'CallExpression',
+      'callee': {
+        'type': 'MemberExpression',
+        'computed': false,
+        'object': {
+          'type': 'Identifier',
+          'name': '_'
         },
-        "property": prop
+        'property': prop
       },
-      "arguments": args
+      'arguments': args
     }
   };
 }

@@ -8,7 +8,7 @@ var jstransform            = require('jstransform')
 var name = process.argv[2];
 
 if (fs.lstatSync(name).isDirectory()) {
-  glob(name + "/**/*.js", {}, function (err, files) {
+  glob(name + '/**/*.js', {}, function (err, files) {
     files.forEach(transformFile);
   });
 } else {
