@@ -1,22 +1,2 @@
-var jstransform            = require('jstransform')
-  , visitUnderscoreOOStyle = require('./visitors/visit_underscore_oo_style').visitorList
-  , fs                     = require('fs')
-  , glob                   = require('glob');
 
-var name = process.argv[2];
-
-if (fs.lstatSync(name).isDirectory()) {
-  glob(name + "/**/*.js", {}, function (err, files) {
-    files.forEach(transformFile);
-  });
-} else {
-  transformFile(name);
-}
-
-function transformFile(fileName) {
-  fs.readFile(fileName, 'utf-8', function (err, data) {
-    if (err) return;
-    var transformed = jstransform.transform(visitUnderscoreOOStyle, data).code;
-    fs.writeFile(fileName, transformed);
-  });
-}
+module.exports = require('./visitors/visit_underscore_oo_style');
